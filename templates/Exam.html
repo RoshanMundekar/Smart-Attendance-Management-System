@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Create Assessment - Attendify{% endblock %}
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 w-full fade-in pb-12">
+  <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200">
+    <div class="bg-gradient-to-r from-indigo-600 to-violet-600 px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div>
+        <h2 class="text-3xl font-bold text-white flex items-center gap-3">
+          <svg class="w-8 h-8 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+          Build 5-Question Assessment
+        </h2>
+        <p class="mt-2 text-indigo-100">Create a new test for your students to attempt.</p>
+      </div>
+    </div>
+
+    <form action="/Exam" method="POST" class="p-8 space-y-8">
+      
+      <!-- Question Iterator -->
+      {% for i in range(1, 6) %}
+      <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 relative">
+         <span class="absolute -top-3 -left-3 flex items-center justify-center w-8 h-8 rounded-full bg-indigo-500 text-white font-bold shadow-md ring-4 ring-white">
+            {{ i }}
+         </span>
+         <div class="space-y-4">
+            <div>
+               <label class="block text-sm font-semibold text-slate-700 mb-1">Question {{ i }} Title</label>
+               <input type="text" name="question{{ i }}" required class="block w-full border-slate-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-3 px-4 border bg-white text-slate-900" placeholder="e.g., Explain the concept of Inheritance in OOP.">
+            </div>
+            <div>
+               <label class="block text-sm font-medium text-slate-700 mb-1">Answer Key / Points (Optional details)</label>
+               <textarea name="description{{ i }}" rows="2" class="block w-full border-slate-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-3 px-4 border bg-white text-slate-900" placeholder="Provide expected answer hints..."></textarea>
+            </div>
+         </div>
+      </div>
+      {% endfor %}
+
+      <div class="pt-4 flex justify-end border-t border-slate-200 mt-8 pt-8">
+        <button type="submit" class="inline-flex items-center justify-center py-3 px-8 border border-transparent rounded-lg shadow-md text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors hover:scale-[1.02]">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+          Deploy Test
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+   window.onload = function () {
+      var message = "{{ msg }}";
+      if (message && message !== "None") {
+         alert(message);
+         window.location.replace("/Exam");
+      }
+   }
+</script>
+{% endblock %}

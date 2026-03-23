@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% block title %}Mark Attendance - Attendify{% endblock %}
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 w-full fade-in pb-12">
+  <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200">
+    <div class="bg-gradient-to-r from-indigo-600 to-blue-600 px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div>
+        <h2 class="text-3xl font-bold text-white flex items-center gap-3">
+          <svg class="w-8 h-8 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path></svg>
+          Mark Class Attendance
+        </h2>
+        <p class="mt-2 text-indigo-100">Upload classroom photos to automatically detect and mark student presence.</p>
+      </div>
+      <div class="bg-white/20 rounded-lg px-4 py-3 backdrop-blur-sm border border-white/20 text-white text-sm">
+        <div class="flex items-center gap-2 mb-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> 11:00 am - 5:30 pm</div>
+        <div class="flex items-center gap-2 mb-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> Support Desk</div>
+        <div class="flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Shahada, MH</div>
+      </div>
+    </div>
+
+    <form action="/attendance" method="POST" enctype="multipart/form-data" class="p-8 space-y-8" id="attendance-form">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Subject</label>
+          <select name="subject" required class="block w-full border-slate-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3 border bg-slate-50">
+            <option value="" disabled selected>Select Subject</option>
+            <option value="python">Python</option>
+            <option value="java">Java</option>
+            <option value="dbms">DBMS</option>
+            <option value="blockchain">Blockchain</option>
+            <option value="Bigdata">Big Data</option>
+            <option value="cloud computing">Cloud Computing</option>
+            <option value="Computer Networks">Computer Networks</option>
+            <option value="IoT">IoT</option>
+          </select>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Department</label>
+          <select name="DEPARTMENT" required class="block w-full border-slate-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3 border bg-slate-50">
+            <option value="" disabled selected>Select Department</option>
+            <option value="Computer">Computer Engineering</option>
+            <option value="Civil">Civil Engineering</option>
+            <option value="Electrical">Electrical Engineering</option>
+            <option value="Mechanical">Mechanical Engineering</option>
+            <option value="Instrumentation">Instrumentation</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Class</label>
+          <select name="year" required class="block w-full border-slate-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3 border bg-slate-50">
+            <option value="" disabled selected>Select Class</option>
+            <option value="2019-2020">First Year</option>
+            <option value="2020-2021">Second Year</option>
+            <option value="2021-2022">Third Year</option>
+            <option value="2022-2023">Final Year</option>
+          </select>
+        </div>
+
+        <div>
+           <label class="block text-sm font-medium text-slate-700 mb-1">Date</label>
+           <input type="date" name="date" required class="block w-full border-slate-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3 border bg-slate-50">
+        </div>
+      </div>
+
+      <div class="mt-8 border-t border-slate-200 pt-8">
+         <h3 class="text-lg font-semibold text-slate-900 mb-4">Classroom Photos</h3>
+         <div class="flex items-center justify-center w-full">
+            <label for="upload_imgs" class="flex flex-col items-center justify-center w-full h-48 border-2 border-slate-300 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors group">
+                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                    <svg class="w-12 h-12 mb-3 text-slate-400 group-hover:text-indigo-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2-2v12a2 2 0 002 2z"></path></svg>
+                    <p class="mb-2 text-sm text-slate-500"><span class="font-semibold text-indigo-600">Click to select images</span></p>
+                    <p class="text-xs text-slate-500">JPG, PNG allowed. Select multiple files or highlight area.</p>
+                </div>
+                <input id="upload_imgs" name="upload_imgs[]" type="file" multiple class="hidden" accept="image/*" />
+            </label>
+        </div>
+        
+        <!-- Image Preview Container -->
+        <div id="img_preview" class="hidden mt-6 p-6 bg-slate-50 border border-slate-200 rounded-xl grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4 shadow-inner">
+            <p id="preview_title" class="col-span-full font-semibold text-sm text-slate-700 mb-2"></p>
+            <!-- Images will be appended here -->
+        </div>
+
+      </div>
+
+      <div class="pt-4 flex justify-end">
+        <button type="submit" class="inline-flex items-center justify-center py-3 px-8 border border-transparent rounded-lg shadow-md text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors hover:scale-[1.02]">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          Process Attendance
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+    const imgUpload = document.getElementById('upload_imgs');
+    const imgPreview = document.getElementById('img_preview');
+    const previewTitle = document.getElementById('preview_title');
+
+    imgUpload.addEventListener('change', function(event) {
+        const files = event.target.files;
+        
+        // Clear previous previews except title
+        Array.from(imgPreview.children).forEach(child => {
+            if (child.id !== 'preview_title') child.remove();
+        });
+
+        if (files.length > 0) {
+            imgPreview.classList.remove('hidden');
+            previewTitle.textContent = `${files.length} Image(s) Selected for Upload`;
+
+            Array.from(files).forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const wrapper = document.createElement('div');
+                        wrapper.className = 'relative aspect-square rounded-lg overflow-hidden border border-slate-200 shadow-sm transition-transform hover:scale-105';
+                        
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.className = 'w-full h-full object-cover';
+                        
+                        wrapper.appendChild(img);
+                        imgPreview.appendChild(wrapper);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        } else {
+            imgPreview.classList.add('hidden');
+        }
+    });
+
+    window.onload = function () {
+        var message = "{{ msg }}";
+        if (message && message !== "None") {
+            alert(message);
+            window.location.replace("/teacherindex");
+        }
+    }
+</script>
+{% endblock %}

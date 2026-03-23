@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}About Us - Attendify{% endblock %}
+{% block content %}
+<div class="bg-slate-50 relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="relative pt-24 pb-32 flex content-center items-center justify-center min-h-[60vh]">
+        <div class="absolute top-0 w-full h-full bg-slate-900 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80')">
+            <span class="w-full h-full absolute opacity-70 bg-gradient-to-r from-indigo-900 to-slate-900"></span>
+        </div>
+        <div class="container relative mx-auto">
+            <div class="items-center flex flex-wrap">
+                <div class="w-full lg:w-8/12 px-4 ml-auto mr-auto text-center">
+                    <div class="fade-in">
+                        <h1 class="text-white font-bold text-5xl md:text-6xl drop-shadow-lg mb-6 tracking-tight">
+                            Revolutionizing Campus Attendance
+                        </h1>
+                        <p class="mt-4 text-lg text-indigo-100 font-medium max-w-3xl mx-auto leading-relaxed">
+                            We are building the most advanced automated tracking platform for modern educational institutions, giving teachers back their time.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-16" style="transform: translateZ(0);">
+            <svg class="absolute bottom-0 overflow-hidden" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" version="1.1" viewBox="0 0 2560 100" x="0" y="0">
+                <polygon class="text-slate-50 fill-current" points="2560 0 2560 100 0 100"></polygon>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Content Section -->
+    <section class="pb-20 pt-10 px-4 max-w-7xl mx-auto w-full">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            
+            <div class="order-2 md:order-1 relative h-[500px] w-full rounded-3xl overflow-hidden shadow-2xl shadow-indigo-200">
+                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" alt="Students in classroom" class="absolute inset-0 w-full h-full object-cover"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-indigo-900/40 to-transparent"></div>
+            </div>
+
+            <div class="order-1 md:order-2 space-y-6">
+                <div class="inline-flex items-center justify-center p-3 bg-indigo-100 rounded-xl mb-4">
+                    <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 leading-tight">Committed to educational excellence.</h2>
+                <p class="text-lg text-slate-600 leading-relaxed">
+                    Class Attendance Management System (Attendify) is designed to alleviate the burden of manual attendance tracking. By utilizing state-of-the-art vision models and seamless workflow integrations, we provide educators with actionable analytics and effortless reporting.
+                </p>
+                <ul class="space-y-4 pt-4">
+                    <li class="flex items-center gap-3">
+                        <div class="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+                            <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                        </div>
+                        <span class="text-slate-700 font-medium">100% Automated Image-based tracking</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <div class="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+                            <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                        </div>
+                        <span class="text-slate-700 font-medium">Comprehensive Analytics & Reporting</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <div class="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+                            <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                        </div>
+                        <span class="text-slate-700 font-medium">Seamless Portal Integration</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

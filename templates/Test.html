@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}Attempt Test - Attendify{% endblock %}
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 w-full fade-in pb-12">
+  <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200">
+    <div class="bg-gradient-to-r from-sky-600 to-cyan-600 px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div>
+        <h2 class="text-3xl font-bold text-white flex items-center gap-3">
+          <svg class="w-8 h-8 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+          Live Assessment
+        </h2>
+        <p class="mt-2 text-sky-100">Answer all questions thoroughly before submitting.</p>
+      </div>
+      <div class="bg-white/20 rounded-lg px-4 py-2 backdrop-blur-sm border border-white/20 text-white font-mono flex items-center gap-2">
+         <svg class="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+         Active Session
+      </div>
+    </div>
+
+    <form action="/Test" method="POST" class="p-8 space-y-8">
+      
+      {% for i in res %}
+      <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 relative">
+         <span class="absolute -top-3 -left-3 flex items-center justify-center w-8 h-8 rounded-full bg-sky-500 text-white font-bold shadow-md ring-4 ring-white">
+            {{ loop.index }}
+         </span>
+         <div class="space-y-4">
+            <h3 class="text-lg font-bold text-slate-800 ml-2 mb-3">{{ i[0] }}</h3>
+            <p class="text-sm text-slate-600 ml-2 italic hidden">{{ i[1] }}</p>
+            
+            <div>
+               <textarea name="description{{loop.index}}" rows="6" required class="block w-full border-slate-300 rounded-lg shadow-sm focus:ring-sky-500 focus:border-sky-500 sm:text-sm py-4 px-4 border bg-white text-slate-900 font-mono resize-y" placeholder="Type your answer here..."></textarea>
+            </div>
+         </div>
+      </div>
+      {% endfor %}
+
+      <div class="pt-4 flex justify-between items-center border-t border-slate-200 mt-8 pt-8">
+        <p class="text-sm text-slate-500 max-w-xs">Warning: Do not refresh this page or your answers will be lost.</p>
+        <button type="submit" class="inline-flex items-center justify-center py-3 px-8 border border-transparent rounded-lg shadow-md text-base font-medium text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 transition-colors hover:scale-[1.02]">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          Final Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+   window.onload = function () {
+       var message = "{{ msg }}";
+       if (message && message !== "None") {
+           alert(message);
+           window.location.replace("/index");
+       }
+   }
+</script>
+{% endblock %}

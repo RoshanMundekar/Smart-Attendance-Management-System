@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Web Attendance System{% endblock %}</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config for Custom Colors/Fonts -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom animations and styles -->
+    <style>
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+    
+    {% block head %}{% endblock %}
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col antialiased selection:bg-primary-200 selection:text-primary-800">
+
+    <!-- Navigation Bar -->
+    {% if session.get('role') == 'admin' %}
+        <!-- ADMIN NAVBAR (Purple Theme) -->
+        <nav class="sticky top-0 z-50 bg-purple-900 shadow-md border-b border-purple-700 text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <div class="flex items-center">
+                        <a href="{{ url_for('adminindex') }}" class="flex-shrink-0 flex items-center gap-2 group">
+                            <div class="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center font-bold">A</div>
+                            <span class="font-bold text-xl tracking-tight">Admin Portal</span>
+                        </a>
+                    </div>
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:flex sm:items-center sm:space-x-1">
+                        <a href="{{ url_for('adminindex') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-purple-800 transition-colors">Home</a>
+                        <div class="relative group">
+                            <button class="px-3 py-2 rounded-md text-sm font-medium hover:bg-purple-800 transition-colors flex items-center">Students <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+                            <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 text-slate-800">
+                                <a href="{{ url_for('addstudents') }}" class="block px-4 py-2 hover:bg-purple-50">View Students</a>
+                                <a href="{{ url_for('createprofile') }}" class="block px-4 py-2 hover:bg-purple-50">Registration</a>
+                            </div>
+                        </div>
+                        <div class="relative group">
+                            <button class="px-3 py-2 rounded-md text-sm font-medium hover:bg-purple-800 transition-colors flex items-center">Teachers <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+                            <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 text-slate-800">
+                                <a href="{{ url_for('addteacher') }}" class="block px-4 py-2 hover:bg-purple-50">View Teachers</a>
+                                <a href="{{ url_for('addteacherregister') }}" class="block px-4 py-2 hover:bg-purple-50">Add Teacher</a>
+                            </div>
+                        </div>
+                        <a href="{{ url_for('attendancereportadmin') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-purple-800 transition-colors">Reports</a>
+                        <a href="{{ url_for('Notice') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-purple-800 transition-colors">Notices</a>
+                        <span class="border-l border-purple-700 h-6 mx-2"></span>
+                        <a href="{{ url_for('logout') }}" class="ml-2 inline-flex items-center px-4 py-2 border border-purple-500 rounded-md shadow-sm text-sm font-medium bg-purple-800 hover:bg-purple-700 transition-all">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        
+    {% elif session.get('role') == 'teacher' %}
+        <!-- TEACHER NAVBAR (Blue Theme) -->
+        <nav class="sticky top-0 z-50 bg-blue-700 shadow-md border-b border-blue-600 text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <div class="flex items-center">
+                        <a href="{{ url_for('teacherindex') }}" class="flex-shrink-0 flex items-center gap-2 group">
+                            <div class="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center font-bold">T</div>
+                            <span class="font-bold text-xl tracking-tight">Faculty Dashboard</span>
+                        </a>
+                    </div>
+                    <!-- Desktop Menu -->
+                    <div class="hidden lg:flex sm:items-center sm:space-x-1">
+                        <a href="{{ url_for('teacherindex') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-600 transition-colors">Home</a>
+                        <a href="{{ url_for('registration') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-600 transition-colors">Students</a>
+                        <a href="{{ url_for('attendance') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-600 transition-colors">Attendance</a>
+                        <a href="{{ url_for('attendancereport') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-600 transition-colors">Report</a>
+                        <a href="{{ url_for('Tnotice') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-600 transition-colors">Announcements</a>
+                        <a href="{{ url_for('Exam') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-600 transition-colors">Exams</a>
+                        <a href="{{ url_for('result') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-600 transition-colors">Results</a>
+                        <span class="border-l border-blue-500 h-6 mx-2"></span>
+                        <span class="px-2 py-2 text-sm text-blue-200">Hi, {{ session.get('name') or session.get('user') }}</span>
+                        <a href="{{ url_for('logout') }}" class="ml-2 inline-flex items-center px-4 py-2 border border-blue-400 rounded-md shadow-sm text-sm font-medium bg-blue-800 hover:bg-blue-900 transition-all">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+    {% elif session.get('role') == 'student' %}
+        <!-- STUDENT NAVBAR (Emerald Theme) -->
+        <nav class="sticky top-0 z-50 bg-emerald-600 shadow-md border-b border-emerald-500 text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <div class="flex items-center">
+                        <a href="{{ url_for('index') }}" class="flex-shrink-0 flex items-center gap-2 group">
+                            <div class="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center font-bold">S</div>
+                            <span class="font-bold text-xl tracking-tight">Student Hub</span>
+                        </a>
+                    </div>
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:flex sm:items-center sm:space-x-1">
+                        <a href="{{ url_for('index') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-emerald-500 transition-colors">Dashboard</a>
+                        <a href="{{ url_for('course') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-emerald-500 transition-colors">Class Teachers</a>
+                        <a href="{{ url_for('attendancereportstudent') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-emerald-500 transition-colors">My Attendance</a>
+                        <a href="{{ url_for('Snotice') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-emerald-500 transition-colors">Notice Board</a>
+                        <a href="{{ url_for('Test') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-emerald-500 transition-colors">Live Test</a>
+                        <span class="border-l border-emerald-400 h-6 mx-2"></span>
+                        <span class="px-2 py-2 text-sm text-emerald-100">Hi, {{ session.get('name') or session.get('user') }}</span>
+                        <a href="{{ url_for('logout') }}" class="ml-2 inline-flex items-center px-4 py-2 border border-emerald-400 rounded-md shadow-sm text-sm font-medium bg-emerald-700 hover:bg-emerald-800 transition-all">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+    {% else %}
+        <!-- PUBLIC NAVBAR (Light Theme) -->
+        <nav class="sticky top-0 z-50 glass shadow-sm border-b border-slate-200/60">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <!-- Logo/Brand -->
+                    <div class="flex items-center">
+                        <a href="{{ url_for('main') }}" class="flex-shrink-0 flex items-center gap-2 group">
+                            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-indigo-600 flex items-center justify-center text-white font-bold shadow-lg shadow-primary-500/30 group-hover:scale-105 transition-transform">
+                                A
+                            </div>
+                            <span class="font-bold text-xl tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-slate-800 to-slate-600">
+                                Attendify
+                            </span>
+                        </a>
+                    </div>
+
+                    <!-- Desktop Menu -->
+                    <div class="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-1">
+                        <a href="{{ url_for('main') }}" class="px-3 py-2 rounded-md text-sm font-medium text-slate-700 hover:text-primary-600 hover:bg-slate-100 transition-colors">Home</a>
+                        <a href="{{ url_for('about') }}" class="px-3 py-2 rounded-md text-sm font-medium text-slate-700 hover:text-primary-600 hover:bg-slate-100 transition-colors">About</a>
+                        <a href="{{ url_for('contact') }}" class="px-3 py-2 rounded-md text-sm font-medium text-slate-700 hover:text-primary-600 hover:bg-slate-100 transition-colors">Contact</a>
+                        
+                        <div class="ml-4 flex items-center space-x-2">
+                            <a href="{{ url_for('login') }}" class="inline-flex items-center px-4 py-2 border border-slate-300 shadow-sm text-sm font-medium rounded-md text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all">
+                                Login
+                            </a>
+                            <a href="{{ url_for('admin') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all">
+                                Admin Portal
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    {% endif %}
+
+    <!-- Flash Messages -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-4">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="rounded-md bg-blue-50 p-4 border border-blue-200 shadow-sm fade-in mb-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-blue-800">{{ message }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <!-- Display explicit message variable if passed -->
+        {% if message %}
+            <div class="rounded-md bg-amber-50 p-4 border border-amber-200 shadow-sm fade-in mb-4">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-amber-800">{{ message }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col mb-12 fade-in relative">
+        <!-- Background decorative blobs -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+            <div class="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-primary-100 blur-3xl opacity-50"></div>
+            <div class="absolute top-40 -left-20 w-72 h-72 rounded-full bg-indigo-100 blur-3xl opacity-50"></div>
+        </div>
+        
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-auto">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-sm text-slate-500">
+                &copy; {{ range(2023, 2027) | random }} Attendify. Smart Face Attendance System. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>
